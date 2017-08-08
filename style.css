@@ -1,9 +1,11 @@
-.SLIDER {
+.slider {
     background-color: silver;
-    height: 307px;
-    padding-top: 24px;
+    height: 438px;
     margin-right: -15px;
     margin-left: -15px;
+    overflow: hidden;
+    top: -70px;
+    position: relative;
 }
 
 .content-box {
@@ -23,6 +25,10 @@
 
 
 }
+
+video {
+    width: 100%;
+  }
 
 footer{
   background: #f5f5f5;

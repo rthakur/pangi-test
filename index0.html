@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>PangiValley - Heaven on Earth</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="slider" style="text-align:center;">
+      <video loop muted autoplay playsinline id="video"></video>
+    </div>
+
+    <div class="container content">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="content-box">
+                  <h2>KILLAR</h2>
+                  <p>killar is the headquater of pangi tehsil</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="content-box">
+                  <h2>KILLAR</h2>
+                  <p>killar is the headquater of pangi tehsil</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="content-box">
+                  <h2>KILLAR</h2>
+                  <p>killar is the headquater of pangi tehsil</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="content-box">
+                  <h2>KILLAR</h2>
+                  <p>killar is the headquater of pangi tehsil</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-4">
+          <div class="content-box">
+            <h2>How to reach pangi</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <center>&copy; 2017 pangivalley.in | created by - <a href="https://www.facebook.com/sahil.rathore.1042" target="_blank">Sahil Rathore</a></center>
+    </footer>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      var vid = "5gcSHmuzB6E",
+        streams,
+        video_focused = true,
+        video_tag = $("#video"),
+        video_obj = video_tag.get(0);
+    $.getJSON("https://query.yahooapis.com/v1/public/yql", {
+        q: "select * from csv where url='https://www.youtube.com/get_video_info?video_id=" + vid + "'",
+        format: "json"
+    }, function(data) {
+        if (data.query.results) {
+            streams = parse_youtube_meta(data.query.results.row.col0);
+            video_tag.attr({
+                src: streams['1440p'] || streams['1080p'] || streams['720p']
+            });
+
+            document.addEventListener("visibilitychange", function() {
+                video_focused = !video_focused ? video_obj.play() : video_obj.pause();
+            });
+        }
+    });
+
+    function parse_youtube_meta(rawdata) {
+        var data = parse_str(rawdata),
+            streams = (data.url_encoded_fmt_stream_map + ',' + data.adaptive_fmts).split(','),
+            result = {};
+    $.each(streams, function(n, s) {
+        var stream = parse_str(s),
+            itag = stream.itag * 1,
+            quality = false,
+            itag_map = {18: '360p', 22: '720p', 37: '1080p', 38: '3072p', 82: '360p3d', 83: '480p3d', 84: '720p3d', 85: '1080p3d', 133: '240pna', 134: '360pna', 135: '480pna', 136: '720pna', 137: '1080pna', 160: '144pna', 264: '1440pna', 139: "48kbps", 140: "128kbps", 141: "256kbps"};
+        if (itag_map[itag]) result[itag_map[itag]] = stream.url;
+    });
+        return result;
+    };
+
+    function parse_str(str) {
+        return str.split('&').reduce(function(params, param) {
+            var paramSplit = param.split('=').map(function(value) {
+                return decodeURIComponent(value.replace('+', ' '));
+            });
+            params[paramSplit[0]] = paramSplit[1];
+            return params;
+        }, {});
+    }
+    </script>
+  </body>
+</html>
