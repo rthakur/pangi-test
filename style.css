@@ -28,13 +28,20 @@
     margin-top: -20px;
 }
 .row.inner-part {
-    margin-top: 0px;
-    background-color: whitesmoke;
-    width: 100%;
-    margin-left: 0px;
+  margin-top: 0px;
+  background-color: #e8e8e8;
+  width: 100%;
+  margin-left: 0px;
 }
 .row {
     width: 100%;
     margin-top: 19px;
     margin-left: 0px;
   }
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  max-height: 400px;
+}
